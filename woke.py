@@ -1,48 +1,19 @@
 import sys
 
+ascended_level = 0
+# Ascended level: the permission level for your script
+# Ascend with 'ascend'
 
-class WoketualMachine:
-  # The Wokescript VM
-  def __init__(self):
-    self.stack = []
-    
-  def _pop(self):
-    self.stack.pop()
-    
-  def _append(self, arg):
-    self.stack.append(arg)
-    
-  def add(self):
-    first_num = self._pop()
-    second_num = self._pop()
-    t = first_num + second_num
-    self._append(t)
-    
-  def print_answer(self):
-    a = self._pop()
-    print(a)
-    
-  def load_val(self, num):
-    self._append(num)
-
-def lex(characters, token_exprs):
-    pos = 0
-    tokens = []
-    while pos < len(characters):
-        match = None
-        for token_expr in token_exprs:
-            pattern, tag = token_expr
-            regex = re.compile(pattern)
-            match = regex.match(characters, pos)
-            if match:
-                text = match.group(0)
-                if tag:
-                    token = (text, tag)
-                    tokens.append(token)
-                break
-        if not match:
-            sys.stderr.write('Illegal character: %s\\n' % characters[pos])
-            sys.exit(1)
-        else:
-            pos = match.end(0)
-    return tokens
+def parse(src):
+  c = src.splitlines()
+  if not src.startswith("woke"):
+    return
+  for line in c:
+    # Check for 'ascend'
+    if "ascend" in line:
+      ascended_level = ascended_level + 1
+    if "output" in line:
+      if ascended_level >= 1:
+        print(line[7:])
+      else:
+        print("is not woke: not ascended enough")
