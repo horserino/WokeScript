@@ -17,3 +17,6 @@ def parse(src):
         print(line[7:])
       else:
         print("is not woke: not ascended enough")
+        return
+    if "i sleep" in line:
+      ascended_level = ascended_level - 1
